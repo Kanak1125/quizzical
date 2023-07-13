@@ -1,0 +1,51 @@
+@import './variables.scss';
+
+.quiz-container {
+    padding: 2rem;
+}
+
+.quiz-element {
+    margin: 20px auto;
+    padding: 20px;
+    justify-self: start;
+}
+.question {
+    font-size: $fontLarge;
+    font-weight: $fontBold;
+    text-align: start;
+}
+
+.options {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 2.5rem;
+}
+
+.option-btn {
+    display: inline-block;
+    border: 2px solid $btnColor;
+    border-radius: 20px;
+    font-size: $fontNormal;
+    padding: 7.5px 15px;
+    font-weight: $fontSemiBold;
+    color: $textColor;
+    cursor: pointer;
+    background-color: $btnTextColor;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow-wrap: break-word;
+    text-align: start;
+}
+
+.option-btn.selected {
+    background-color: $optionSelectedBgColor;
+    border: 2px solid $optionSelectedBgColor;
+}
+
+hr {
+    margin-top: 15px;
+    border: 1px solid $horizontalRuleColor;
+    border-radius: 5px;
+}

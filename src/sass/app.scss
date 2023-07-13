@@ -1,0 +1,55 @@
+@import 'variables.scss';
+
+.blob {
+    position: fixed;
+    z-index: -1;
+}
+
+.blob_yellow {
+    top: 0;
+    right: 0;
+}
+
+.blob_blue {
+    bottom: 0;
+    left: 0;
+}
+
+.app {
+    text-align: center;
+    color: $textColor;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+        font-size: $fontHeader;
+        font-weight: $fontBold;
+    }
+
+    .sub {
+        margin-top: 7px;
+        font-size: $fontNormal;
+    }
+
+    .btn {
+        width: 190px;
+        height: 50px;
+        margin-top: 40px;
+        background-color: $btnColor;
+        color: $btnTextColor;
+        border: none;
+        border-radius: 15px;
+        transition: background-color 300ms ease-out;
+        cursor: pointer;
+        font-size: $fontNormal;
+        font-weight: $fontBold;
+        
+        &:hover {
+            background-color: $btnOnHoverColor;
+        }
+    }
+
+}
