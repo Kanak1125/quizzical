@@ -6,17 +6,13 @@ const QuizPanel = (props) => {
   const {quiz} = props;
   const [options, setOptions] = useState([]);
 
-  const quizArr = [{
-    question: 'What is the hottest planet in the solar system?',
-    option: 'jkf'
-}]
-
   useEffect(() => {
     let answers = [];
     const ans = quiz.map(q => {
       answers = [];
       answers = q.incorrect_answers;
       answers.push(q.correct_answer);
+      // Fisher-Yate's shuffle algorithm
       const suffledAns = array => array.sort(() => Math.random() - 0.5);
       return suffledAns(answers);
     })

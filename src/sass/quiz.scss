@@ -42,6 +42,7 @@
 .option-btn.selected {
     background-color: $optionSelectedBgColor;
     border: 2px solid $optionSelectedBgColor;
+    transition: all 300ms ease-out;
 }
 
 hr {
