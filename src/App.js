@@ -7,6 +7,7 @@ import './sass/app.scss';
 function App() {
   const [hasQuizStarted, setHasQuizStarted] = useState(false);
   const [quiz, setQuiz] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   
   function startQuiz() {
     fetch('https://opentdb.com/api.php?amount=5').then(res => 
@@ -22,7 +23,7 @@ function App() {
     <div className="app">
       {
         hasQuizStarted ?
-        <QuizPanel  quiz={quiz}/> :
+        <QuizPanel  quiz={quiz} isLoading={isLoading}/> :
         <InitialPanel 
           startQuiz={startQuiz}
         />

@@ -45,8 +45,33 @@
     transition: all 300ms ease-out;
 }
 
+.option-btn.not-allowed {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.input-radio {
+    display: none;
+}
+
 hr {
     margin-top: 15px;
     border: 1px solid $horizontalRuleColor;
     border-radius: 5px;
+}
+
+.score-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+    column-gap: 20px;
+}
+
+.score-section .btn {
+    margin: 0 !important;
+}
+
+.score {
+    font-weight: $fontBold;
 }

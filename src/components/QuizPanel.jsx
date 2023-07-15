@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import Quiz from './Quiz';
 import '../sass/quiz.scss';
+import { decode } from 'html-entities';
 
 const QuizPanel = (props) => {
-  const {quiz} = props;
+  const {quiz, isLoading} = props;
   const [options, setOptions] = useState([]);
+  const [checking, setChecking] = useState(false);
 
   useEffect(() => {
     let answers = [];
@@ -48,16 +50,28 @@ const QuizPanel = (props) => {
   quizzes = quiz.map((element, index) => {
     console.log(options[index]);
     return <Quiz key={index}
-      question={element.question}
+      id={index}
+      question={decode(element.question)}
       options={options[index]}
       // isSelected={element.isSelected}
+      checking={checking}
     />
   });
 
   return (
-    <div className='quiz-container'>
-      {quizzes}
-    </div>
+    <>
+      <div className='quiz-container'>
+        {quizzes}
+        <div className='score-section'>
+          <button 
+            className="btn"
+            onClick={() => setChecking(true)}          
+          >Check answers</button>
+          {/* <p className='score'>You have scored<span>0</span>/5 answers.</p>
+          <button className="btn">Play again</button> */}
+        </div>
+      </div>
+    </>
   )
 }
 

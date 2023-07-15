@@ -1,53 +1,57 @@
 import { useState, useEffect } from "react";
+import { decode } from 'html-entities';
+import { v4 as uuidv4 } from 'uuid';
 
 const Quiz = (props) => {
-    const {question, options} = props;
-  // console.log(options);
-    // changing the 'options' Obj. into the array of key, value pair using Object.entries()...
-    // const opt = Object.entries(options).map(([key, value]) => {
-      // const labelId = question;
-    //    return (
-    //    <div key={key}>
-    //     <label htmlFor={labelId} className={`option-btn ${isSelected ? 'selected' : ''}`}>{value}</label>
-    //     <input type="radio" name={question} id={labelId} />
-    //    </div>
-    //    )
-    // })
+  const {question, options, id, checking } = props;
 
   const [opt, setOpt] = useState([]);
-  const [selectedValue, setSelectedValue] = useState("");
-  console.log(selectedValue);
+  const [selectedOption, setSelectedOption] = useState("");
+  // console.log(selectedValue);
+
+  function handleOptionSelection(e) {
+    if (checking) return;
+    setSelectedOption(e.target.value);
+  }
 
     useEffect(() => {
       if (options !== undefined) {
-        // let selected
         const mappedOptions = options.map((option, index) => {
-          const combinedKey = index + option; // so that the label don't go wrong for e.g. when more than one question have options as 'true' and 'false'
-          // const isSelected = {question: ''}
+
+          const uniqueId = uuidv4();
+          const decodeOption = decode(option);
+
           return (
             <div key={index}>
-              <label htmlFor={combinedKey} className={`option-btn ${selectedValue === option ? 'selected' : ''}`}>{option}</label>
+              <label 
+                htmlFor={uniqueId}
+                className={`option-btn 
+                  ${selectedOption === decodeOption ? 'selected' : ''}
+                  ${checking ? 'not-allowed' : ''}`
+                  }>
+                    {decode(option)}
+              </label>
               <input 
                 type="radio" 
                 name={question} 
-                id={combinedKey} 
-                value={option}
-                onChange={(e) => setSelectedValue(e.target.value)}
-                checked={ selectedValue === option }
+                id={uniqueId} 
+                className="input-radio"
+                value={decodeOption}
+                onChange={(e) => handleOptionSelection(e)}
+                checked={selectedOption === decodeOption }
               />
            </div>
           )
         })
         setOpt(mappedOptions);
       }
-    }, [options, selectedValue]);
+    }, [options, selectedOption, checking]);
   return (
     <>
     <div className="quiz-element">
         <div className="question">{question}</div>
         <div className="options">
           {opt}
-          {/* {options} */}
         </div>
     </div>
     <hr />
