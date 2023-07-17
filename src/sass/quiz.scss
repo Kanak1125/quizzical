@@ -45,6 +45,18 @@
     transition: all 300ms ease-out;
 }
 
+.option-btn.correct-option {
+    background-color: $correctOptionColor !important;
+    border: 2px solid $correctOptionColor !important;
+    opacity: 1 !important;
+}
+
+.option-btn.wrong-option {
+    background-color: $wrongOptionColor;
+    border: 2px solid $wrongOptionColor;
+    opacity: 1 !important;
+}
+
 .option-btn.not-allowed {
     cursor: not-allowed;
     opacity: 0.5;

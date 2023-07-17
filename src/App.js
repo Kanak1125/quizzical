@@ -12,10 +12,11 @@ function App() {
   function startQuiz() {
     fetch('https://opentdb.com/api.php?amount=5').then(res => 
         res.json()
-      ).then(data => 
-        setQuiz(data.results)
+      ).then(data => {
+        setHasQuizStarted(true);
+        return setQuiz(data.results)
+      }
       );
-    setHasQuizStarted(true);
   }
   console.log(quiz);
 
@@ -23,7 +24,7 @@ function App() {
     <div className="app">
       {
         hasQuizStarted ?
-        <QuizPanel  quiz={quiz} isLoading={isLoading}/> :
+        <QuizPanel  quiz={quiz} isLoading={isLoading} startQuiz={startQuiz}/> :
         <InitialPanel 
           startQuiz={startQuiz}
         />

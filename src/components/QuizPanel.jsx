@@ -4,9 +4,12 @@ import '../sass/quiz.scss';
 import { decode } from 'html-entities';
 
 const QuizPanel = (props) => {
-  const {quiz, isLoading} = props;
+  const {quiz, startQuiz} = props;
   const [options, setOptions] = useState([]);
   const [checking, setChecking] = useState(false);
+  const [score, setScore] = useState(0);
+  const [isEveryAnswered, setIsEveryAnswered] = useState(false);
+  // const [replay, setReplay] = useState(false);
 
   useEffect(() => {
     let answers = [];
@@ -16,7 +19,8 @@ const QuizPanel = (props) => {
       answers.push(q.correct_answer);
       // Fisher-Yate's shuffle algorithm
       const suffledAns = array => array.sort(() => Math.random() - 0.5);
-      return suffledAns(answers);
+
+      return suffledAns(Array.from(new Set(answers)));
     })
     setOptions(ans);
   }, [quiz]);
@@ -24,6 +28,9 @@ const QuizPanel = (props) => {
   console.log('sorted')
   console.log(options);
 
+  function incrementScore() {
+    setScore(prevScore => prevScore + 1);
+  }
   // useEffect(() => {
   //   setOptions([]);
   //   // quiz.map(q => setOptions(prevOptions => prevOptions, q.incorrect_answers));
@@ -53,22 +60,38 @@ const QuizPanel = (props) => {
       id={index}
       question={decode(element.question)}
       options={options[index]}
+      correct_option={decode(element.correct_answer)}
       // isSelected={element.isSelected}
       checking={checking}
+      incrementScore={incrementScore}
+      startQuiz={startQuiz}
+      setIsEveryAnswered={setIsEveryAnswered}
     />
   });
+
+  function playAgain() {
+    startQuiz();
+    setChecking(false);
+    setScore(0);
+    setIsEveryAnswered(false);
+  }
 
   return (
     <>
       <div className='quiz-container'>
         {quizzes}
         <div className='score-section'>
-          <button 
+          {checking ? 
+          <>
+            <p className='score'>You have scored <span>{score}</span>/5 answers.</p>
+            <button className="btn" onClick={playAgain}>Play again</button>
+          </>
+            :
+          (isEveryAnswered && <button 
             className="btn"
             onClick={() => setChecking(true)}          
-          >Check answers</button>
-          {/* <p className='score'>You have scored<span>0</span>/5 answers.</p>
-          <button className="btn">Play again</button> */}
+          >Check answers</button>)
+          }
         </div>
       </div>
     </>
