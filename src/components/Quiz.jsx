@@ -52,7 +52,7 @@ const Quiz = (props) => {
         })
         setOpt(mappedOptions);
       }
-    }, [options, selectedOption, checking]);
+    }, [options, selectedOption, checking, correct_option, question, setIsAnyAnswered]);
 
     // side effect to count the score...
     useEffect(() => {
