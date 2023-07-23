@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import './App.css';
 import InitialPanel from './components/InitialPanel';
 import QuizPanel from './components/QuizPanel';
@@ -7,7 +7,7 @@ import './sass/app.scss';
 function App() {
   const [hasQuizStarted, setHasQuizStarted] = useState(false);
   const [quiz, setQuiz] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   
   function startQuiz() {
     fetch('https://opentdb.com/api.php?amount=5').then(res => 
@@ -15,8 +15,8 @@ function App() {
       ).then(data => {
         setHasQuizStarted(true);
         return setQuiz(data.results)
-      }
-      );
+      })
+      .catch(err => console.log("Error: " + err));
   }
   console.log(quiz);
 
@@ -24,7 +24,7 @@ function App() {
     <div className="app">
       {
         hasQuizStarted ?
-        <QuizPanel  quiz={quiz} isLoading={isLoading} startQuiz={startQuiz}/> :
+        <QuizPanel  quiz={quiz} startQuiz={startQuiz}/> :
         <InitialPanel 
           startQuiz={startQuiz}
         />

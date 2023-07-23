@@ -8,7 +8,7 @@ const QuizPanel = (props) => {
   const [options, setOptions] = useState([]);
   const [checking, setChecking] = useState(false);
   const [score, setScore] = useState(0);
-  const [isEveryAnswered, setIsEveryAnswered] = useState(false);
+  const [isAnyAnswered, setIsAnyAnswered] = useState(false);
   // const [replay, setReplay] = useState(false);
 
   useEffect(() => {
@@ -20,6 +20,7 @@ const QuizPanel = (props) => {
       // Fisher-Yate's shuffle algorithm
       const suffledAns = array => array.sort(() => Math.random() - 0.5);
 
+      // passes the new array after removing the duplicate elements in an array using Set...
       return suffledAns(Array.from(new Set(answers)));
     })
     setOptions(ans);
@@ -31,27 +32,7 @@ const QuizPanel = (props) => {
   function incrementScore() {
     setScore(prevScore => prevScore + 1);
   }
-  // useEffect(() => {
-  //   setOptions([]);
-  //   // quiz.map(q => setOptions(prevOptions => prevOptions, q.incorrect_answers));
-  //   // let answers = [];
-  //   // quiz.map(q => {
-  //   //   answers = [];
-  //   //   answers = q.incorrect_answers;
-  //   //   answers.push(q.correct_answer);
-  //   //   return setOptions(prevOpt => [...prevOpt, answers]);
-  //   // })
-  //   const updatedOptions = quiz.map(q => {
-  //     const answers = [...q.incorrect_answers, q.correct_answer];
-  //     return answers;
-  //   });
-
-  //   setOptions(updatedOptions);
-  // }, [quiz])
-
-  // console.log(options);
-
-  // console.log(quiz);
+  
   let quizzes;
 
   quizzes = quiz.map((element, index) => {
@@ -65,7 +46,7 @@ const QuizPanel = (props) => {
       checking={checking}
       incrementScore={incrementScore}
       startQuiz={startQuiz}
-      setIsEveryAnswered={setIsEveryAnswered}
+      setIsAnyAnswered={setIsAnyAnswered}
     />
   });
 
@@ -73,7 +54,7 @@ const QuizPanel = (props) => {
     startQuiz();
     setChecking(false);
     setScore(0);
-    setIsEveryAnswered(false);
+    setIsAnyAnswered(false);
   }
 
   return (
@@ -87,7 +68,7 @@ const QuizPanel = (props) => {
             <button className="btn" onClick={playAgain}>Play again</button>
           </>
             :
-          (isEveryAnswered && <button 
+          (isAnyAnswered && <button 
             className="btn"
             onClick={() => setChecking(true)}          
           >Check answers</button>)

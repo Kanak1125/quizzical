@@ -1,17 +1,15 @@
 import { useState, useEffect } from "react";
 import { decode } from 'html-entities';
 import { v4 as uuidv4 } from 'uuid';
+import classNames from "classnames";
 
 const Quiz = (props) => {
-  const {question, options, id, checking, correct_option, incrementScore, setIsEveryAnswered } = props;
+  const {question, options, checking, correct_option, incrementScore, setIsAnyAnswered } = props;
 
   const [opt, setOpt] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
-  // const [selectedOptionArray, setSelectedOptionArray] = useState([]);
-  // console.log(selectedValue);
 
   function handleOptionSelection(e) {
-    if (checking) return;
     setSelectedOption(e.target.value);
   }
 
@@ -22,17 +20,20 @@ const Quiz = (props) => {
           const uniqueId = uuidv4();
           const decodedOption = decode(option);
 
-          setIsEveryAnswered(selectedOption === "" ? false: true)
+          setIsAnyAnswered(selectedOption === "" ? false: true)
 
           return (
             <div key={index}>
               <label 
                 htmlFor={uniqueId}
-                className={`option-btn 
-                  ${selectedOption === decodedOption ? 'selected' : ''}
-                  ${checking ? 'not-allowed' : ''}
-                  ${checking && selectedOption === decodedOption ? 'wrong-option' : ''}
-                  ${checking && decodedOption === correct_option ? 'correct-option' : ''}`  // only after checking, set the correct option color...
+                className={
+                  classNames(
+                    "option-btn",
+                    {"selected": selectedOption === decodedOption },
+                    {"not-allowed": checking},
+                    {"wrong-option": checking && selectedOption === decodedOption},
+                    {"correct-option": checking && decodedOption === correct_option}
+                  )
                   }>
                     {decode(option)}
               </label>
@@ -44,6 +45,7 @@ const Quiz = (props) => {
                 value={decodedOption}
                 onChange={(e) => handleOptionSelection(e)}
                 checked={selectedOption === decodedOption}
+                disabled={checking}
               />
            </div>
           )
